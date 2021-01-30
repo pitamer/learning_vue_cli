@@ -1,7 +1,7 @@
 <template>
   <div class="lists-app">
     <div class="list-menu">
-      <ul>
+      <ul v-if="lists.length">
         <li
           v-for="list in lists"
           :class="[
@@ -16,37 +16,62 @@
           >
             {{ list.name }}
           </div>
-          <div class="delete-button" @click="deleteList(lists.indexOf(list))">
-            X
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div class="list-content">
-      <ul>
-        <li
-          v-for="item in lists[currentListIndex].items"
-          :class="[{ done: item.done }, 'list-item']"
-          :key="item.name"
-        >
-          <div class="item-name" @click="toggleDone(item)">
-            {{ item.name }}
+          <div
+            class="button edit-button"
+            @click="deleteList(lists.indexOf(list))"
+          >
+            🖊️
           </div>
           <div
-            class="delete-button"
-            @click="deleteItem(currentListIndex, item)"
+            class="button delete-button"
+            @click="deleteList(lists.indexOf(list))"
           >
             X
           </div>
         </li>
       </ul>
+      <form class="new-list-form">
+        <input type="text" class="text-input" />
+        <input type="submit" value="+" class="button add-button" />
+      </form>
+    </div>
+    <div class="list-content">
+      <div v-if="currentListIndex >= 0 && currentListIndex != null">
+        <ul>
+          <li
+            v-for="item in lists[currentListIndex].items"
+            :class="[{ done: item.done }, 'list-item']"
+            :key="item.name"
+          >
+            <div class="item-name" @click="toggleDone(item)">
+              {{ item.name }}
+            </div>
+            <div
+              class="button edit-button"
+              @click="deleteItem(currentListIndex, item)"
+            >
+              🖊️
+            </div>
+            <div
+              class="button delete-button"
+              @click="deleteItem(currentListIndex, item)"
+            >
+              X
+            </div>
+          </li>
+        </ul>
+        <form class="new-item-form">
+          <input type="text" class="text-input" />
+          <input type="submit" value="+" class="button add-button" />
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Counter",
+  name: "Lists",
 
   data() {
     return {
@@ -152,19 +177,34 @@ li {
     padding: 3px 6px;
   }
 
+  & > .button {
+    padding: 3px 4px;
+  }
+
   .item-name,
   .list-name {
     transition: 0.2s ease-out;
     flex-grow: 1;
   }
-  .delete-button {
+
+  .button {
     text-align: center;
     min-width: 23px;
-    color: gray;
     transition: 0.2s ease-out;
+  }
+
+  .delete-button {
+    color: gray;
     &:hover {
       background-color: rgba(255, 70, 70, 0.7);
       color: white;
+    }
+  }
+  .edit-button {
+    opacity: 50%;
+    &:hover {
+      background-color: rgba(70, 70, 255, 0.5);
+      opacity: 100%;
     }
   }
 
@@ -197,13 +237,13 @@ li {
 }
 
 .list-menu {
-  width: 35%;
-  outline: 1px gray solid;
+  width: 40%;
+  border-right: 1px gray solid;
   display: flex;
   flex-flow: column;
 }
 .list-content {
-  width: 65%;
+  width: 60%;
 }
 .current {
   background-color: rgba(70, 200, 255, 0.2);
@@ -212,6 +252,33 @@ li {
   .item-name {
     color: var(--light-green);
     text-decoration: line-through;
+  }
+}
+.new-list-form,
+.new-item-form {
+  display: flex;
+  width: 100%;
+  margin-top: 0.5em;
+
+  & > input {
+    border: 0;
+    padding: 0;
+    margin: 0;
+  }
+
+  .button {
+    min-width: 62px;
+    min-height: 28px;
+    font-size: 1em;
+    background-color: #42b98393;
+    &:hover {
+      background-color: #42b983c0;
+    }
+  }
+
+  .text-input {
+    flex-grow: 1;
+    background-color: #42b98336;
   }
 }
 </style>
