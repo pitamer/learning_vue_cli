@@ -1,7 +1,7 @@
 <template>
   <div class="lists">
     <h1>This is a lists app.</h1>
-    <ListsApp :stupidNumber="stupidNumber" />
+    <ListsApp />
   </div>
 </template>
 
@@ -13,16 +13,5 @@ export default {
   components: {
     ListsApp,
   },
-  data() {
-    return {
-      stupidNumber: 1,
-    };
-  },
 };
 </script>
-
-<style scoped lang="scss">
-h2 {
-  color: red;
-}
-</style>
