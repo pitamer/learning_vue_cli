@@ -1,7 +1,9 @@
 <template>
   <div class="lists">
     <h1>This is a lists app.</h1>
-    <ListsApp />
+    <div class="lists-app-container">
+      <ListsApp />
+    </div>
   </div>
 </template>
 
@@ -15,3 +17,11 @@ export default {
   },
 };
 </script>
+
+<style>
+.lists-app-container {
+  display: grid;
+  place-items: center;
+  padding: 1em; 
+}
+</style>

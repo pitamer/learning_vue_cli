@@ -27,8 +27,12 @@
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: var(--light-green);
     }
   }
+}
+
+:root {
+  --light-green: #42b983;
 }
 </style>
