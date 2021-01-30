@@ -9,9 +9,16 @@
             'list-title',
           ]"
           :key="lists.indexOf(list)"
-          @click="setCurrentListIndex(lists.indexOf(list))"
         >
-          {{ list.name }}
+          <div
+            class="list-name"
+            @click="setCurrentListIndex(lists.indexOf(list))"
+          >
+            {{ list.name }}
+          </div>
+          <div class="delete-button" @click="deleteList(lists.indexOf(list))">
+            X
+          </div>
         </li>
       </ul>
     </div>
@@ -21,9 +28,16 @@
           v-for="item in lists[currentListIndex].items"
           :class="[{ done: item.done }, 'list-item']"
           :key="item.name"
-          @click="toggleDone(item)"
         >
-          {{ item.name }}
+          <div class="item-name" @click="toggleDone(item)">
+            {{ item.name }}
+          </div>
+          <div
+            class="delete-button"
+            @click="deleteItem(currentListIndex, item)"
+          >
+            X
+          </div>
         </li>
       </ul>
     </div>
@@ -100,6 +114,23 @@ export default {
     toggleDone(listItem) {
       listItem.done = !listItem.done;
     },
+    deleteItem(listIndex, item) {
+      const listItems = this.lists[listIndex].items;
+      const itemIndex = listItems.indexOf(item);
+      listItems.splice(itemIndex, 1);
+    },
+    deleteList(listIndex) {
+      if (this.currentListIndex === listIndex) {
+        this.currentListIndex = this.lists[listIndex + 1]
+          ? listIndex
+          : listIndex > 0
+          ? listIndex - 1
+          : null;
+      } else if (this.currentListIndex > listIndex) {
+        this.currentListIndex--;
+      }
+      this.lists.splice(listIndex, 1);
+    },
   },
 
   computed: {},
@@ -115,7 +146,28 @@ ul {
 }
 
 li {
-  padding: 2px 6px;
+  display: flex;
+
+  & > * {
+    padding: 3px 6px;
+  }
+
+  .item-name,
+  .list-name {
+    transition: 0.2s ease-out;
+    flex-grow: 1;
+  }
+  .delete-button {
+    text-align: center;
+    min-width: 23px;
+    color: gray;
+    transition: 0.2s ease-out;
+    &:hover {
+      background-color: rgba(255, 70, 70, 0.7);
+      color: white;
+    }
+  }
+
   background: linear-gradient(
     to left,
     transparent 50%,
@@ -132,6 +184,7 @@ li {
 
 ul,
 li {
+  margin: 0;
   user-select: none;
 }
 
@@ -156,7 +209,9 @@ li {
   background-color: rgba(70, 200, 255, 0.2);
 }
 .done {
-  color: var(--light-green);
-  text-decoration: line-through;
+  .item-name {
+    color: var(--light-green);
+    text-decoration: line-through;
+  }
 }
 </style>
