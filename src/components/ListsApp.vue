@@ -30,9 +30,14 @@
           </div>
         </li>
       </ul>
-      <form class="new-list-form">
-        <input type="text" class="text-input" />
-        <input type="submit" value="+" class="button add-button" />
+      <form class="new-list-form" v-on:submit.prevent>
+        <input type="text" class="text-input" v-model="newListName" />
+        <input
+          type="submit"
+          value="+"
+          class="button add-button"
+          @click="addList(newListName)"
+        />
       </form>
     </div>
     <div class="list-content">
@@ -50,7 +55,7 @@
               class="button edit-button"
               @click="deleteItem(currentListIndex, item)"
             >
-              🖊️
+              🖊
             </div>
             <div
               class="button delete-button"
@@ -60,9 +65,14 @@
             </div>
           </li>
         </ul>
-        <form class="new-item-form">
-          <input type="text" class="text-input" />
-          <input type="submit" value="+" class="button add-button" />
+        <form class="new-item-form" v-on:submit.prevent>
+          <input type="text" class="text-input" v-model="newItemName" />
+          <input
+            type="submit"
+            value="+"
+            class="button add-button"
+            @click="addItem(currentListIndex, newItemName)"
+          />
         </form>
       </div>
     </div>
@@ -75,6 +85,8 @@ export default {
 
   data() {
     return {
+      newListName: "",
+      newItemName: "",
       currentListIndex: 1,
       lists: [
         {
@@ -156,6 +168,20 @@ export default {
       }
       this.lists.splice(listIndex, 1);
     },
+    addList(listName) {
+      this.newListName = "";
+      this.lists.push({
+        name: listName,
+        items: [],
+      });
+    },
+    addItem(listIndex, newItemName) {
+      this.lists[listIndex].items.push({
+        name: newItemName,
+        done: false,
+      });
+      this.newItemName = "";
+    },
   },
 
   computed: {},
@@ -203,7 +229,7 @@ li {
   .edit-button {
     opacity: 50%;
     &:hover {
-      background-color: rgba(70, 70, 255, 0.5);
+      background-color: rgba(70, 70, 255, 0.4);
       opacity: 100%;
     }
   }
@@ -232,7 +258,9 @@ li {
   width: 100%;
   max-width: 35em;
   min-height: 20em;
-  outline: 1px gray solid;
+  border: 1px gray solid;
+  border-radius: 6px;
+  overflow: hidden;
   display: flex;
 }
 
@@ -271,14 +299,24 @@ li {
     min-height: 28px;
     font-size: 1em;
     background-color: #42b98393;
+    cursor: pointer;
+    transition: 0.2s ease-out;
     &:hover {
-      background-color: #42b983c0;
+      background-color: var(--light-green);
+      color: white;
     }
   }
 
   .text-input {
+    padding-left: 3px;
     flex-grow: 1;
     background-color: #42b98336;
+    transition: 0.2s ease-out;
+    border-bottom: 2px transparent solid;
+    &:focus {
+      outline: none;
+      border-bottom: 2px #42b98393 solid;
+    }
   }
 }
 </style>
