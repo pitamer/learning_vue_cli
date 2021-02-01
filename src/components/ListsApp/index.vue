@@ -1,92 +1,27 @@
 <template>
   <div class="lists-app">
-    <div class="list-menu">
-      <ul v-if="lists.length">
-        <li
-          v-for="list in lists"
-          :class="[
-            { current: lists.indexOf(list) === currentListIndex },
-            'list-title',
-          ]"
-          :key="lists.indexOf(list)"
-        >
-          <div
-            class="list-name"
-            @click="setCurrentListIndex(lists.indexOf(list))"
-          >
-            {{ list.name }}
-          </div>
-          <div
-            class="button edit-button"
-            @click="deleteList(lists.indexOf(list))"
-          >
-            🖊️
-          </div>
-          <div
-            class="button delete-button"
-            @click="deleteList(lists.indexOf(list))"
-          >
-            X
-          </div>
-        </li>
-      </ul>
-      <form class="new-list-form" v-on:submit.prevent>
-        <input type="text" class="text-input" v-model="newListName" />
-        <input
-          type="submit"
-          value="+"
-          class="button add-button"
-          @click="addList(newListName)"
-        />
-      </form>
-    </div>
-    <div class="list-content">
-      <div v-if="currentListIndex >= 0 && currentListIndex != null">
-        <ul>
-          <li
-            v-for="item in lists[currentListIndex].items"
-            :class="[{ done: item.done }, 'list-item']"
-            :key="item.name"
-          >
-            <div class="item-name" @click="toggleDone(item)">
-              {{ item.name }}
-            </div>
-            <div
-              class="button edit-button"
-              @click="deleteItem(currentListIndex, item)"
-            >
-              🖊
-            </div>
-            <div
-              class="button delete-button"
-              @click="deleteItem(currentListIndex, item)"
-            >
-              X
-            </div>
-          </li>
-        </ul>
-        <form class="new-item-form" v-on:submit.prevent>
-          <input type="text" class="text-input" v-model="newItemName" />
-          <input
-            type="submit"
-            value="+"
-            class="button add-button"
-            @click="addItem(currentListIndex, newItemName)"
-          />
-        </form>
-      </div>
-    </div>
+    <ListMenu :lists="lists" :currentListIndex="currentListIndex" />
+    <ListContent
+      :items="lists[currentListIndex].items"
+      :currentListIndex="currentListIndex"
+    />
   </div>
 </template>
 
 <script>
+import ListMenu from "./ListMenu";
+import ListContent from "./ListContent";
+
 export default {
   name: "Lists",
 
+  components: {
+    ListMenu,
+    ListContent,
+  },
+
   data() {
     return {
-      newListName: "",
-      newItemName: "",
       currentListIndex: 1,
       lists: [
         {
@@ -197,9 +132,11 @@ export default {
 
   computed: {},
 };
+
+console.log("hiiiiiii");
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 ul {
   margin: 0;
   padding: 0;

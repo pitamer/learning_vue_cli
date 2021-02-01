@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ListsApp from "@/components/ListsApp.vue";
+import ListsApp from "@/components/ListsApp";
 
 export default {
   name: "Lists",
@@ -22,6 +22,6 @@ export default {
 .lists-app-container {
   display: grid;
   place-items: center;
-  padding: 1em; 
+  padding: 1em;
 }
 </style>
