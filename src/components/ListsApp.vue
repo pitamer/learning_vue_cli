@@ -169,13 +169,21 @@ export default {
       this.lists.splice(listIndex, 1);
     },
     addList(listName) {
-      this.newListName = "";
+      if (this.newListName === "") {
+        // # Focus on input text field
+        return
+      }
       this.lists.push({
         name: listName,
         items: [],
       });
+      this.newListName = "";
     },
     addItem(listIndex, newItemName) {
+      if (this.newItemName === "") {
+        // # Focus on input text field
+        return
+      }
       this.lists[listIndex].items.push({
         name: newItemName,
         done: false,
