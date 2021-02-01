@@ -171,18 +171,21 @@ export default {
     addList(listName) {
       if (this.newListName === "") {
         // # Focus on input text field
-        return
+        return;
       }
       this.lists.push({
         name: listName,
         items: [],
       });
       this.newListName = "";
+      if (this.lists.length === 1) {
+        setTimeout(() => (this.currentListIndex = 0), 100);
+      }
     },
     addItem(listIndex, newItemName) {
       if (this.newItemName === "") {
         // # Focus on input text field
-        return
+        return;
       }
       this.lists[listIndex].items.push({
         name: newItemName,
