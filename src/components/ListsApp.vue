@@ -234,6 +234,7 @@ li {
       color: white;
     }
   }
+
   .edit-button {
     opacity: 50%;
     &:hover {
