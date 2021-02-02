@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="button delete-button"
-  >
+  <div class="button delete-button">
     X
   </div>
 </template>

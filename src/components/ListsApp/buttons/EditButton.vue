@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="button edit-button"
-  >
+  <div class="button edit-button">
     🖊
   </div>
 </template>

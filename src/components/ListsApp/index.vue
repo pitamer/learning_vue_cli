@@ -1,9 +1,14 @@
 <template>
   <div class="lists-app">
-    <ListMenu :lists="lists" :currentListIndex="currentListIndex" />
-    <ListContent
-      :items="lists[currentListIndex].items"
+    <ListMenu
+      :lists="lists"
       :currentListIndex="currentListIndex"
+      @delete-list="deleteList"
+    />
+    <ListContent
+      :items="lists[currentListIndex]?.items || []"
+      :currentListIndex="currentListIndex"
+      @delete-item="deleteItem"
     />
   </div>
 </template>
@@ -11,6 +16,8 @@
 <script>
 import ListMenu from "./ListMenu";
 import ListContent from "./ListContent";
+
+import { lists } from "@/store";
 
 export default {
   name: "Lists",
@@ -23,59 +30,7 @@ export default {
   data() {
     return {
       currentListIndex: 1,
-      lists: [
-        {
-          name: "Books",
-          items: [
-            {
-              name: "Sherlock Holmes",
-              done: true,
-            },
-            {
-              name: "The Old Man and the Sea",
-              done: false,
-            },
-          ],
-        },
-        {
-          name: "Films",
-          items: [
-            {
-              name: "Annihilation",
-              done: true,
-            },
-            {
-              name: "Ex Machina",
-              done: true,
-            },
-            {
-              name: "Trainspotting",
-              done: false,
-            },
-          ],
-        },
-        {
-          name: "Technologies",
-          items: [
-            {
-              name: "Python",
-              done: true,
-            },
-            {
-              name: "JavaScript",
-              done: true,
-            },
-            {
-              name: "React",
-              done: true,
-            },
-            {
-              name: "Vue",
-              done: false,
-            },
-          ],
-        },
-      ],
+      lists: lists,
     };
   },
 
@@ -132,8 +87,6 @@ export default {
 
   computed: {},
 };
-
-console.log("hiiiiiii");
 </script>
 
 <style lang="scss">
