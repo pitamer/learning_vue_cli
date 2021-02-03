@@ -11,7 +11,7 @@
       >
         <div
           class="list-name"
-          @click="setCurrentListIndex(lists.indexOf(list))"
+          @click="$emit('set-current-list-index', lists.indexOf(list))"
         >
           {{ list.name }}
         </div>
@@ -25,7 +25,7 @@
         type="submit"
         value="+"
         class="button add-button"
-        @click="addList(newListName)"
+        @click="$emit('add-list', newListName)"
       />
     </form>
   </div>

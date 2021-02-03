@@ -7,11 +7,11 @@
           :class="[{ done: item.done }, 'list-item']"
           :key="item.name"
         >
-          <div class="item-name" @click="toggleDone(item)">
+          <div class="item-name" @click="$emit('toggle-done', item)">
             {{ item.name }}
           </div>
-          <EditButton @click="$emit('delete-item', currentListIndex, item)"/>
-          <DeleteButton @click="$emit('delete-item', currentListIndex, item)"/>
+          <EditButton @click="$emit('delete-item', currentListIndex, item)" />
+          <DeleteButton @click="$emit('delete-item', currentListIndex, item)" />
         </li>
       </ul>
       <form class="new-item-form" v-on:submit.prevent>
@@ -20,7 +20,7 @@
           type="submit"
           value="+"
           class="button add-button"
-          @click="addItem(currentListIndex, newItemName)"
+          @click="$emit('add-item', currentListIndex, newItemName)"
         />
       </form>
     </div>

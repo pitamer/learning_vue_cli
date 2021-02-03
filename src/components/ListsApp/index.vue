@@ -4,11 +4,15 @@
       :lists="lists"
       :currentListIndex="currentListIndex"
       @delete-list="deleteList"
+      @set-current-list-index="setCurrentListIndex"
+      @add-list="addList"
     />
     <ListContent
       :items="lists[currentListIndex]?.items || []"
       :currentListIndex="currentListIndex"
       @delete-item="deleteItem"
+      @toggle-done="toggleDone"
+      @add-item="addItem"
     />
   </div>
 </template>
@@ -58,22 +62,22 @@ export default {
       }
       this.lists.splice(listIndex, 1);
     },
-    addList(listName) {
-      if (this.newListName === "") {
+    addList(newListName) {
+      if (newListName === "") {
         // # Focus on input text field
         return;
       }
       this.lists.push({
-        name: listName,
+        name: newListName,
         items: [],
       });
-      this.newListName = "";
+      newListName = ""; // # set it inside the component too
       if (this.lists.length === 1) {
         setTimeout(() => (this.currentListIndex = 0), 100);
       }
     },
     addItem(listIndex, newItemName) {
-      if (this.newItemName === "") {
+      if (newItemName === "") {
         // # Focus on input text field
         return;
       }
@@ -81,7 +85,7 @@ export default {
         name: newItemName,
         done: false,
       });
-      this.newItemName = "";
+      newItemName = ""; // # set it inside the component too
     },
   },
 
