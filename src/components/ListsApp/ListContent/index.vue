@@ -44,15 +44,13 @@ export default {
       type: Array,
       required: true,
     },
+    newItemName: {
+      type: String,
+      required: true,
+    },
     currentListIndex: {
       type: Number,
     },
-  },
-
-  data() {
-    return {
-      newItemName: "",
-    };
   },
 };
 </script>

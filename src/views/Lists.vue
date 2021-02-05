@@ -1,6 +1,13 @@
 <template>
   <div class="lists">
-    <h1>This is a lists app.</h1>
+    <h1>
+      <router-link to="/">
+        <span>
+          &lt;
+        </span>
+      </router-link>
+      This is a lists app.
+    </h1>
     <div class="lists-app-container">
       <ListsApp />
     </div>

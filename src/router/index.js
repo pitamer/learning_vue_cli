@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from "@/views/Home.vue";
+import Lists from "@/views/Lists.vue";
 
 const routes = [
   {
@@ -7,17 +8,10 @@ const routes = [
     name: "Home",
     component: Home,
   },
-  // {
-  //   path: "/about",
-  //   name: "About",
-  //   component: () =>
-  //     import(/* webpackChunkName: "about" */ "@/views/About.vue"),
-  // },
   {
     path: "/lists",
     name: "Lists",
-    component: () =>
-      import(/* webpackChunkName: "lists" */ "@/views/Lists.vue"),
+    component: Lists,
   },
 ];
 

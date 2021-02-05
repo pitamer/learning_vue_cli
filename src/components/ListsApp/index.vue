@@ -3,6 +3,7 @@
     <ListMenu
       :lists="lists"
       :currentListIndex="currentListIndex"
+      :newListName="newListName"
       @delete-list="deleteList"
       @set-current-list-index="setCurrentListIndex"
       @add-list="addList"
@@ -10,6 +11,7 @@
     <ListContent
       :items="lists[currentListIndex]?.items || []"
       :currentListIndex="currentListIndex"
+      :newItemName="newItemName"
       @delete-item="deleteItem"
       @toggle-done="toggleDone"
       @add-item="addItem"
@@ -33,6 +35,8 @@ export default {
 
   data() {
     return {
+      newListName: "",
+      newItemName: "",
       currentListIndex: 1,
       lists: lists,
     };
