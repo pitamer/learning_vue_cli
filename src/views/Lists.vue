@@ -6,7 +6,7 @@
           &lt;
         </span>
       </router-link>
-      This is a lists app.
+      <!-- This is a lists app. -->
     </h1>
     <div class="lists-app-container">
       <ListsApp />
@@ -25,10 +25,21 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .lists-app-container {
   display: grid;
   place-items: center;
   padding: 1em;
 }
+
+a {
+  text-decoration: none;
+  transition: 0.2s ease-out;
+  &:hover {
+    color: #fff;
+    font-size: 1.1em;
+    text-shadow: 0px 0px 20px green
+  }
+}
+
 </style>

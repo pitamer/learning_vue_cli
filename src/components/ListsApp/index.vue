@@ -37,7 +37,7 @@ export default {
     return {
       newListName: "",
       newItemName: "",
-      currentListIndex: 1,
+      currentListIndex: 2,
       lists: lists,
     };
   },
@@ -126,22 +126,6 @@ li {
     text-align: center;
     min-width: 23px;
     transition: 0.2s ease-out;
-  }
-
-  .delete-button {
-    color: gray;
-    &:hover {
-      background-color: rgba(255, 70, 70, 0.7);
-      color: white;
-    }
-  }
-
-  .edit-button {
-    opacity: 50%;
-    &:hover {
-      background-color: rgba(70, 70, 255, 0.4);
-      opacity: 100%;
-    }
   }
 
   background: linear-gradient(

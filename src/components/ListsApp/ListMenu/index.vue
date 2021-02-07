@@ -48,13 +48,15 @@ export default {
       type: Array,
       required: true,
     },
-    newListName: {
-      type: String,
-      required: true,
-    },
     currentListIndex: {
       type: Number,
     },
+  },
+
+  data() {
+    return {
+      newListName: "",
+    };
   },
 };
 </script>
