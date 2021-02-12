@@ -56,3 +56,12 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+.done {
+    .item-name {
+      color: var(--light-green);
+      text-decoration: line-through;
+    }
+  }
+</style>
