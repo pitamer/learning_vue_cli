@@ -15,12 +15,17 @@
         </li>
       </ul>
       <form class="new-item-form" v-on:submit.prevent>
-        <input type="text" class="text-input" v-model="newItemName" />
+        <input
+          type="text"
+          class="text-input"
+          :value="modelValue"
+          @input="$emit('update:modelValue', $event.target.value)"
+        />
         <input
           type="submit"
           value="+"
           class="button add-button"
-          @click="$emit('add-item', currentListIndex, newItemName)"
+          @click="$emit('add-item', currentListIndex, modelValue)"
         />
       </form>
     </div>
@@ -40,20 +45,26 @@ export default {
   },
 
   props: {
+    currentListIndex: {
+      type: Number,
+    },
     items: {
       type: Array,
       required: true,
     },
-    currentListIndex: {
-      type: Number,
-    },
+    modelValue: {
+      type: String,
+      required: true,
+    }
   },
 
-  data() {
-    return {
-      newItemName: "",
-    };
-  },
+  emits: ['update:modelValue', 'add-item'],
+
+  // data() {
+  //   return {
+  //     newItemName: "",
+  //   };
+  // },
 };
 </script>
 

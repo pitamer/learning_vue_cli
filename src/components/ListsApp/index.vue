@@ -11,7 +11,7 @@
     <ListContent
       :items="lists[currentListIndex]?.items || []"
       :currentListIndex="currentListIndex"
-      :newItemName="newItemName"
+      v-model="newItemName"
       @delete-item="deleteItem"
       @toggle-done="toggleDone"
       @add-item="addItem"
@@ -93,7 +93,6 @@ export default {
     },
   },
 
-  computed: {},
 };
 </script>
 
