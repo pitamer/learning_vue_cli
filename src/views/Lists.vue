@@ -20,8 +20,8 @@ import ListsApp from "@/components/ListsApp";
 export default {
   name: "Lists",
   components: {
-    ListsApp,
-  },
+    ListsApp
+  }
 };
 </script>
 
@@ -38,8 +38,7 @@ a {
   &:hover {
     color: #fff;
     font-size: 1.1em;
-    text-shadow: 0px 0px 20px green
+    text-shadow: 0px 0px 20px green;
   }
 }
-
 </style>

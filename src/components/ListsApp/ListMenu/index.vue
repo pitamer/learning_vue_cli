@@ -5,7 +5,7 @@
         v-for="list in lists"
         :class="[
           { current: lists.indexOf(list) === currentListIndex },
-          'list-title',
+          'list-title'
         ]"
         :key="lists.indexOf(list)"
       >
@@ -19,14 +19,17 @@
         <DeleteButton @click="$emit('delete-list', lists.indexOf(list))" />
       </li>
     </ul>
-    <form class="new-list-form" v-on:submit.prevent>
-      <input type="text" class="text-input" v-model="newListName" />
+    <form
+      class="new-list-form"
+      @submit.prevent="$emit('add-list', newListName)"
+    >
       <input
-        type="submit"
-        value="+"
-        class="button add-button"
-        @click="$emit('add-list', newListName)"
+        type="text"
+        class="text-input"
+        :value="newListName"
+        @input="$emit('update:newListName', $event.target.value)"
       />
+      <input type="submit" value="+" class="button add-button" />
     </form>
   </div>
 </template>
@@ -40,23 +43,26 @@ export default {
 
   components: {
     EditButton,
-    DeleteButton,
+    DeleteButton
   },
+
+  emits: [
+    "set-current-list-index",
+    "delete-list",
+    "add-list",
+    "update:newListName"
+  ],
 
   props: {
+    currentListIndex: Number,
     lists: {
       type: Array,
-      required: true,
+      required: true
     },
-    currentListIndex: {
-      type: Number,
-    },
-  },
-
-  data() {
-    return {
-      newListName: "",
-    };
-  },
+    newListName: {
+      type: String,
+      required: true
+    }
+  }
 };
 </script>

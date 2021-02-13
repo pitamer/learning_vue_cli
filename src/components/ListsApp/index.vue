@@ -1,9 +1,10 @@
 <template>
   <div class="lists-app">
+    <!-- eslint-disable -->
     <ListMenu
       :lists="lists"
       :currentListIndex="currentListIndex"
-      :newListName="newListName"
+      v-model:newListName="newListName"
       @delete-list="deleteList"
       @set-current-list-index="setCurrentListIndex"
       @add-list="addList"
@@ -11,11 +12,12 @@
     <ListContent
       :items="lists[currentListIndex]?.items || []"
       :currentListIndex="currentListIndex"
-      v-model="newItemName"
+      v-model:newItemName="newItemName"
       @delete-item="deleteItem"
       @toggle-done="toggleDone"
       @add-item="addItem"
     />
+    <!-- eslint-enable -->
   </div>
 </template>
 
@@ -30,7 +32,7 @@ export default {
 
   components: {
     ListMenu,
-    ListContent,
+    ListContent
   },
 
   data() {
@@ -38,7 +40,7 @@ export default {
       newListName: "",
       newItemName: "",
       currentListIndex: 2,
-      lists: lists,
+      lists: lists
     };
   },
 
@@ -73,9 +75,9 @@ export default {
       }
       this.lists.push({
         name: newListName,
-        items: [],
+        items: []
       });
-      newListName = ""; // # set it inside the component too
+      this.newListName = ""; // # set it inside the component too
       if (this.lists.length === 1) {
         setTimeout(() => (this.currentListIndex = 0), 100);
       }
@@ -87,12 +89,11 @@ export default {
       }
       this.lists[listIndex].items.push({
         name: newItemName,
-        done: false,
+        done: false
       });
-      newItemName = ""; // # set it inside the component too
-    },
-  },
-
+      this.newItemName = "";
+    }
+  }
 };
 </script>
 
@@ -165,7 +166,7 @@ export default {
   .current {
     background-color: rgba(70, 200, 255, 0.2);
   }
-  
+
   .new-list-form,
   .new-item-form {
     display: flex;

@@ -14,19 +14,17 @@
           <DeleteButton @click="$emit('delete-item', currentListIndex, item)" />
         </li>
       </ul>
-      <form class="new-item-form" v-on:submit.prevent>
+      <form
+        class="new-item-form"
+        @submit.prevent="$emit('add-item', currentListIndex, newItemName)"
+      >
         <input
           type="text"
           class="text-input"
-          :value="modelValue"
-          @input="$emit('update:modelValue', $event.target.value)"
+          :value="newItemName"
+          @input="$emit('update:newItemName', $event.target.value)"
         />
-        <input
-          type="submit"
-          value="+"
-          class="button add-button"
-          @click="$emit('add-item', currentListIndex, modelValue)"
-        />
+        <input type="submit" value="+" class="button add-button" />
       </form>
     </div>
   </div>
@@ -41,38 +39,30 @@ export default {
 
   components: {
     EditButton,
-    DeleteButton,
+    DeleteButton
   },
 
   props: {
-    currentListIndex: {
-      type: Number,
-    },
+    currentListIndex: Number,
     items: {
       type: Array,
-      required: true,
+      required: true
     },
-    modelValue: {
+    newItemName: {
       type: String,
-      required: true,
+      required: true
     }
   },
 
-  emits: ['update:modelValue', 'add-item'],
-
-  // data() {
-  //   return {
-  //     newItemName: "",
-  //   };
-  // },
+  emits: ["update:newItemName", "add-item", "delete-item", "toggle-done"]
 };
 </script>
 
 <style scoped lang="scss">
 .done {
-    .item-name {
-      color: var(--light-green);
-      text-decoration: line-through;
-    }
+  .item-name {
+    color: var(--light-green);
+    text-decoration: line-through;
   }
+}
 </style>
