@@ -5,6 +5,8 @@
         v-for="list in lists"
         :class="[
           { current: lists.indexOf(list) === currentListIndex },
+          { allDone: list.items.length && list.items.every(i => i.done) },
+          { empty: !list.items.length },
           'list-title'
         ]"
         :key="lists.indexOf(list)"
@@ -14,6 +16,12 @@
           @click="$emit('set-current-list-index', lists.indexOf(list))"
         >
           {{ list.name }}
+          <span v-if="list.items.some(i => !i.done)" class="list-progress-indication">
+            {{ listProgressIndication(list) }}
+          </span>
+           <span v-else-if="!list.items.length" class="list-progress-indication">
+            (empty)
+          </span>
         </div>
         <EditButton @click="$emit('delete-list', lists.indexOf(list))" />
         <DeleteButton @click="$emit('delete-list', lists.indexOf(list))" />
@@ -63,6 +71,32 @@ export default {
       type: String,
       required: true
     }
+  },
+
+  methods: {
+    listProgressIndication(list) {
+      const itemsInList = list.items.length
+      const itemsDone = list.items.filter(i => i.done).length
+      const donePercentage = Math.floor(itemsDone / itemsInList * 100)
+      return `(${donePercentage}%)`
+    }
   }
 };
 </script>
+
+<style lang="scss">
+.list-menu {
+  .allDone {
+    .list-name {
+      color: #999999;
+    }
+  }
+  .list-progress-indication {
+    font-size: 9px;
+    text-align: right;
+  }
+  .empty {
+    color: var(--light-green)
+  }
+}
+</style>
