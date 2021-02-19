@@ -16,11 +16,8 @@
           @click="$emit('set-current-list-index', lists.indexOf(list))"
         >
           {{ list.name }}
-          <span v-if="list.items.some(i => !i.done)" class="list-progress-indication">
+          <span class="list-progress-indication">
             {{ listProgressIndication(list) }}
-          </span>
-           <span v-else-if="!list.items.length" class="list-progress-indication">
-            (empty)
           </span>
         </div>
         <EditButton @click="$emit('delete-list', lists.indexOf(list))" />
@@ -76,7 +73,14 @@ export default {
   methods: {
     listProgressIndication(list) {
       const itemsInList = list.items.length
+      if (!itemsInList) {
+        return "(empty)"
+      }
       const itemsDone = list.items.filter(i => i.done).length
+      if (itemsDone === itemsInList) {
+        // Display nothing if all items are done
+        return null
+      }
       const donePercentage = Math.floor(itemsDone / itemsInList * 100)
       return `(${donePercentage}%)`
     }
