@@ -1,8 +1,19 @@
 <template>
-  <div id="nav">
+  <div id="app-container">
+    <NavBar />
     <router-view />
   </div>
 </template>
+
+<script>
+import NavBar from "@/components/NavBar";
+
+export default {
+  components: {
+    NavBar
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
@@ -10,24 +21,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: var(--dark-green);
   background-color: rgba(0, 255, 76, 0.13);
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: var(--light-green);
-    }
-  }
+  padding: none;
+  margin: none;
 }
 
 :root {
   --light-green: #42b983;
+  --dark-green: #2c3e50;
 }
 </style>
