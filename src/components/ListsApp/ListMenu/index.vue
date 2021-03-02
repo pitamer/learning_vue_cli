@@ -34,7 +34,7 @@
         :value="newListName"
         @input="$emit('update:newListName', $event.target.value)"
       />
-      <input type="submit" value="+" class="button add-button" />
+      <input type="submit" value="+" class="button add-item-button" />
     </form>
   </div>
 </template>
@@ -42,13 +42,15 @@
 <script>
 import EditButton from "../buttons/EditButton.vue";
 import DeleteButton from "../buttons/DeleteButton.vue";
+// import SimpleTextForm from "@/components/SimpleTextForm"
 
 export default {
   name: "ListMenu",
 
   components: {
     EditButton,
-    DeleteButton
+    DeleteButton,
+    // SimpleTextForm
   },
 
   emits: [

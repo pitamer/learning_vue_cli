@@ -48,14 +48,17 @@ export default {
     setCurrentListIndex(newIndex) {
       this.currentListIndex = newIndex;
     },
+
     toggleDone(listItem) {
       listItem.done = !listItem.done;
     },
+
     deleteItem(listIndex, item) {
       const listItems = this.lists[listIndex].items;
       const itemIndex = listItems.indexOf(item);
       listItems.splice(itemIndex, 1);
     },
+    
     deleteList(listIndex) {
       if (this.currentListIndex === listIndex) {
         this.currentListIndex = this.lists[listIndex + 1]
@@ -68,6 +71,7 @@ export default {
       }
       this.lists.splice(listIndex, 1);
     },
+
     addList(newListName) {
       if (newListName === "") {
         // # Focus on input text field
@@ -77,11 +81,13 @@ export default {
         name: newListName,
         items: []
       });
-      this.newListName = ""; // # set it inside the component too
+      this.newListName = "";
+
       if (this.lists.length === 1) {
         setTimeout(() => (this.currentListIndex = 0), 100);
       }
     },
+
     addItem(listIndex, newItemName) {
       if (newItemName === "") {
         // # Focus on input text field
