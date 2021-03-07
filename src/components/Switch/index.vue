@@ -1,5 +1,8 @@
 <template>
-  <div @click="toggleSwitch" :class="['switch', switchModeOn ? 'on' : 'off']">
+  <div
+    @click="switchFunction"
+    :class="['switch', isActive ? 'on' : 'off']"
+  >
     <div class="switch-bubble"></div>
   </div>
 </template>
@@ -8,17 +11,13 @@
 export default {
   name: "Switch",
 
-  data() {
-    return {
-      switchModeOn: true,
-    };
-  },
-
-  methods: {
-    toggleSwitch() {
-      this.switchModeOn = !this.switchModeOn;
-    },
-  },
+  props: {
+    switchFunction: Function,
+    isActive: {
+      type: Boolean,
+      required: true
+    }
+  }
 };
 </script>
 
