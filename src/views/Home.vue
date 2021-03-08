@@ -1,7 +1,11 @@
 <template>
   <div class="home">
     <HelloWorld />
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <img
+      alt="Vue logo"
+      src="../assets/logo.png"
+      :class="{ 'dark': darkModeEnabled }"
+    />
   </div>
 </template>
 
@@ -13,6 +17,13 @@ export default {
   components: {
     HelloWorld,
   },
+
+  props: {
+    darkModeEnabled: {
+      type: Boolean,
+      required: true
+    }
+  }
 };
 </script>
 
@@ -20,5 +31,9 @@ export default {
 img {
   width: 100px;
   margin: 1.5em 0;
+  transition: 0.2s ease-out;
+  &.dark {
+    filter: drop-shadow(0px 0px 6px #222);
+  }
 }
 </style>

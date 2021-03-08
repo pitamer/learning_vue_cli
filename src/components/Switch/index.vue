@@ -1,8 +1,5 @@
 <template>
-  <div
-    @click="switchFunction"
-    :class="['switch', isActive ? 'on' : 'off']"
-  >
+  <div @click="switchFunction" :class="['switch', isActive ? 'on' : 'off']">
     <div class="switch-bubble"></div>
   </div>
 </template>
@@ -15,9 +12,9 @@ export default {
     switchFunction: Function,
     isActive: {
       type: Boolean,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 };
 </script>
 
@@ -30,26 +27,33 @@ export default {
   display: grid;
   transition: 0.2s ease-out;
   cursor: pointer;
+
   .switch-bubble {
-    margin: 0 2px;
-    height: 1em;
-    width: 1em;
+    margin: 0 3px;
+    height: 0.8em;
+    width: 0.8em;
     border-radius: 50%;
   }
+
   &.on {
     place-items: center right;
-    border: 0.1px solid var(--dark-green);
+    border: 1px solid var(--dark-green);
     background-color: var(--light-green);
+
     .switch-bubble {
       background-color: var(--dark-green);
+      border: 0.1px solid var(--dark-green);
     }
   }
+
   &.off {
     place-items: center left;
-    border: 0.1px solid var(--dark-green);
+    border: 1px solid var(--light-green);
     background-color: var(--dark-green);
+    
     .switch-bubble {
       background-color: var(--light-green);
+      // border: 0.1px solid var(--light-green);
     }
   }
 }

@@ -44,12 +44,13 @@ export default {
 
 <style lang="scss">
 .app-bar {
-  border-bottom: 1px solid var(--dark-green);
+  background-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 5px -3px 2px 5px rgba(30, 30, 30, 0.6);
   display: flex;
   padding: 0.1em 0;
   transition: 0.2s ease-out;
   &.dark {
-    border-bottom: 1px solid var(--cucumber-water);
+    background-color: rgba(225, 225, 225, 0.1);
     .nav {
       a {
         color: var(--cucumber-water);
