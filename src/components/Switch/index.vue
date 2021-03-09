@@ -25,10 +25,12 @@ export default {
   width: 2.3em;
   border-radius: 1.5em;
   display: grid;
+  place-items: center right;
   transition: 0.2s ease-out;
   cursor: pointer;
 
   .switch-bubble {
+    transition: 0.15s ease-out;
     margin: 0 3px;
     height: 0.8em;
     width: 0.8em;
@@ -36,7 +38,6 @@ export default {
   }
 
   &.on {
-    place-items: center right;
     border: 1px solid var(--dark-green);
     background-color: var(--light-green);
 
@@ -47,11 +48,11 @@ export default {
   }
 
   &.off {
-    place-items: center left;
     border: 1px solid var(--light-green);
     background-color: var(--dark-green);
-    
+
     .switch-bubble {
+      margin-right: 22px;
       background-color: var(--light-green);
       // border: 0.1px solid var(--light-green);
     }
