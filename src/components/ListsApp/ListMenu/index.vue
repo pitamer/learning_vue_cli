@@ -49,7 +49,7 @@ export default {
 
   components: {
     EditButton,
-    DeleteButton,
+    DeleteButton
     // SimpleTextForm
   },
 
@@ -69,22 +69,26 @@ export default {
     newListName: {
       type: String,
       required: true
+    },
+    darkModeEnabled: {
+      type: Boolean,
+      required: true
     }
   },
 
   methods: {
     listProgressIndication(list) {
-      const itemsInList = list.items.length
+      const itemsInList = list.items.length;
       if (!itemsInList) {
-        return "(empty)"
+        return "(empty)";
       }
-      const itemsDone = list.items.filter(i => i.done).length
+      const itemsDone = list.items.filter(i => i.done).length;
       if (itemsDone === itemsInList) {
         // Display nothing if all items are done
-        return null
+        return null;
       }
-      const donePercentage = Math.floor(itemsDone / itemsInList * 100)
-      return `(${donePercentage}%)`
+      const donePercentage = Math.floor((itemsDone / itemsInList) * 100);
+      return `(${donePercentage}%)`;
     }
   }
 };
@@ -102,7 +106,7 @@ export default {
     text-align: right;
   }
   .empty {
-    color: var(--light-green)
+    color: var(--light-green);
   }
 }
 </style>

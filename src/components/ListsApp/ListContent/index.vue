@@ -4,7 +4,7 @@
       <ul>
         <li
           v-for="item in items"
-          :class="[{ done: item.done }, 'list-item']"
+          :class="['list-item', { done: item.done }]"
           :key="item.name"
         >
           <div class="item-name" @click="$emit('toggle-done', item)">
@@ -50,6 +50,10 @@ export default {
     },
     newItemName: {
       type: String,
+      required: true
+    },
+    darkModeEnabled: {
+      type: Boolean,
       required: true
     }
   },

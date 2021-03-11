@@ -4,6 +4,7 @@
     <ListMenu
       :lists="lists"
       :currentListIndex="currentListIndex"
+      :darkModeEnabled="darkModeEnabled"
       v-model:newListName="newListName"
       @delete-list="deleteList"
       @set-current-list-index="setCurrentListIndex"
@@ -12,6 +13,7 @@
     <ListContent
       :items="lists[currentListIndex]?.items || []"
       :currentListIndex="currentListIndex"
+      :darkModeEnabled="darkModeEnabled"
       v-model:newItemName="newItemName"
       @delete-item="deleteItem"
       @toggle-done="toggleDone"
@@ -35,13 +37,20 @@ export default {
     ListContent
   },
 
+  props: {
+    darkModeEnabled: {
+      type: Boolean,
+      required: true
+    }
+  },
+
   data() {
     return {
       newListName: "",
       newItemName: "",
       currentListIndex: 2,
       lists: lists
-    };
+    }
   },
 
   methods: {

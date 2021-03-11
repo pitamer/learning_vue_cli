@@ -12,9 +12,9 @@ export default {
     switchFunction: Function,
     isActive: {
       type: Boolean,
-      required: true,
-    },
-  },
+      required: true
+    }
+  }
 };
 </script>
 

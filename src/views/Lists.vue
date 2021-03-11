@@ -4,7 +4,7 @@
       This is a lists app.
     </h1>
     <div class="lists-app-container">
-      <ListsApp />
+      <ListsApp :darkModeEnabled="darkModeEnabled" />
     </div>
   </div>
 </template>
@@ -15,8 +15,15 @@ import ListsApp from "@/components/ListsApp";
 export default {
   name: "Lists",
   components: {
-    ListsApp,
+    ListsApp
   },
+
+  props: {
+    darkModeEnabled: {
+      type: Boolean,
+      required: true
+    }
+  }
 };
 </script>
 
@@ -24,6 +31,5 @@ export default {
 .lists-app-container {
   display: grid;
   place-items: center;
-  padding: 1em;
 }
 </style>
