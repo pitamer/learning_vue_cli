@@ -82,10 +82,7 @@ export default {
     },
 
     addList(newListName) {
-      if (newListName === "") {
-        // # Focus on input text field
-        return;
-      }
+      // TODO: Make sure the list does not exit already
       this.lists.push({
         name: newListName,
         items: []
@@ -98,10 +95,7 @@ export default {
     },
 
     addItem(listIndex, newItemName) {
-      if (newItemName === "") {
-        // # Focus on input text field
-        return;
-      }
+      // TODO: Make sure the item does not exit already
       this.lists[listIndex].items.push({
         name: newItemName,
         done: false

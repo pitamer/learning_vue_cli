@@ -5,7 +5,7 @@
         v-for="list in lists"
         :class="[
           { current: lists.indexOf(list) === currentListIndex },
-          { allDone: list.items.length && list.items.every((i) => i.done) },
+          { allDone: list.items.length && list.items.every(i => i.done) },
           { empty: !list.items.length },
           'list-title',
         ]"
@@ -24,13 +24,11 @@
         <DeleteButton @click="$emit('delete-list', lists.indexOf(list))" />
       </li>
     </ul>
-    <form
-      class="new-list-form"
-      @submit.prevent="$emit('add-list', newListName)"
-    >
+    <form class="new-list-form" @submit.prevent="submitNewList(newListName)">
       <input
         type="text"
         class="text-input"
+        ref="newListInputRef"
         :value="newListName"
         @input="$emit('update:newListName', $event.target.value)"
       />
@@ -43,6 +41,8 @@
 import EditButton from "../buttons/EditButton.vue";
 import DeleteButton from "../buttons/DeleteButton.vue";
 // import SimpleTextForm from "@/components/SimpleTextForm"
+
+import { ref } from "vue";
 
 export default {
   name: "ListMenu",
@@ -76,19 +76,44 @@ export default {
     }
   },
 
+  setup() {
+    const newListInputRef = ref(null)
+
+    const refreshFocusOnInput = () => {
+      newListInputRef.value.blur()
+      setTimeout(() => newListInputRef.value.focus(), 150)
+    }
+
+    return {
+      newListInputRef,
+      refreshFocusOnInput
+    }
+  },
+
   methods: {
     listProgressIndication(list) {
       const itemsInList = list.items.length;
       if (!itemsInList) {
         return "(empty)";
       }
-      const itemsDone = list.items.filter((i) => i.done).length;
+      const itemsDone = list.items.filter(i => i.done).length;
       if (itemsDone === itemsInList) {
         // Display nothing if all items are done
         return null;
       }
       const donePercentage = Math.floor((itemsDone / itemsInList) * 100);
       return `(${donePercentage}%)`;
+    },
+
+    submitNewList(newListName) {
+      newListName = newListName.trim()
+
+      if (newListName) {
+        this.$emit("add-list", newListName)
+      } else {
+        this.$emit("update:newListName", "")
+        this.refreshFocusOnInput()
+      }
     }
   }
 };

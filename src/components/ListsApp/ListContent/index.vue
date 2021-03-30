@@ -16,11 +16,12 @@
       </ul>
       <form
         class="new-item-form"
-        @submit.prevent="$emit('add-item', currentListIndex, newItemName)"
+        @submit.prevent="submitNewItem(currentListIndex, newItemName)"
       >
         <input
           type="text"
           class="text-input"
+          ref="newItemInputRef"
           :value="newItemName"
           @input="$emit('update:newItemName', $event.target.value)"
         />
@@ -33,6 +34,8 @@
 <script>
 import EditButton from "../buttons/EditButton.vue";
 import DeleteButton from "../buttons/DeleteButton.vue";
+
+import { ref } from "vue";
 
 export default {
   name: "ListContent",
@@ -58,7 +61,34 @@ export default {
     }
   },
 
-  emits: ["update:newItemName", "add-item", "delete-item", "toggle-done"]
+  emits: ["update:newItemName", "add-item", "delete-item", "toggle-done"],
+
+  setup() {
+    const newItemInputRef = ref(null)
+
+    const refreshFocusOnInput = () => {
+      newItemInputRef.value.blur()
+      setTimeout(() => newItemInputRef.value.focus(), 150)
+    }
+
+    return {
+      newItemInputRef,
+      refreshFocusOnInput
+    }
+  },
+
+  methods: {
+    submitNewItem(currentListIndex, newItemName) {
+      newItemName = newItemName.trim()
+
+      if (newItemName) {
+        this.$emit("add-item", currentListIndex, newItemName)
+      } else {
+        this.$emit("update:newItemName", "")
+        this.refreshFocusOnInput()
+      }
+    }
+  }
 };
 </script>
 
