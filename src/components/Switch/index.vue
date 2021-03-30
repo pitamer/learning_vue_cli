@@ -22,11 +22,11 @@ export default {
 .switch {
   margin: 0.4em;
   height: 1.2em;
-  width: 2.3em;
+  width: 2.2em;
   border-radius: 1.5em;
   display: grid;
   place-items: center right;
-  transition: 0.2s ease-out;
+  transition: 0.2s ease-out, box-shadow 0.08s linear;
   cursor: pointer;
 
   .switch-bubble {
@@ -43,18 +43,27 @@ export default {
 
     .switch-bubble {
       background-color: var(--dark-green);
-      border: 0.1px solid var(--dark-green);
+      // border: 0.1px solid var(--dark-green);
+    }
+
+    &:active {
+      box-shadow: 0px 0px 2px black;
     }
   }
 
   &.off {
     border: 1px solid var(--light-green);
     background-color: var(--dark-green);
+    background-color: #333;
 
     .switch-bubble {
-      margin-right: 22px;
+      margin-right: 20px;
       background-color: var(--light-green);
       // border: 0.1px solid var(--light-green);
+    }
+
+    &:active {
+      box-shadow: 0px 0px 2px white;
     }
   }
 }

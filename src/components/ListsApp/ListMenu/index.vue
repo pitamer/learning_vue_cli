@@ -5,9 +5,9 @@
         v-for="list in lists"
         :class="[
           { current: lists.indexOf(list) === currentListIndex },
-          { allDone: list.items.length && list.items.every(i => i.done) },
+          { allDone: list.items.length && list.items.every((i) => i.done) },
           { empty: !list.items.length },
-          'list-title'
+          'list-title',
         ]"
         :key="lists.indexOf(list)"
       >
@@ -49,7 +49,7 @@ export default {
 
   components: {
     EditButton,
-    DeleteButton
+    DeleteButton,
     // SimpleTextForm
   },
 
@@ -82,7 +82,7 @@ export default {
       if (!itemsInList) {
         return "(empty)";
       }
-      const itemsDone = list.items.filter(i => i.done).length;
+      const itemsDone = list.items.filter((i) => i.done).length;
       if (itemsDone === itemsInList) {
         // Display nothing if all items are done
         return null;
@@ -98,7 +98,7 @@ export default {
 .list-menu {
   .allDone {
     .list-name {
-      color: #999999;
+      color: var(--light-green);
     }
   }
   .list-progress-indication {
@@ -106,7 +106,7 @@ export default {
     text-align: right;
   }
   .empty {
-    color: var(--light-green);
+    color: #999999;
   }
 }
 </style>

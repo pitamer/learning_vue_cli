@@ -67,7 +67,7 @@ export default {
       const itemIndex = listItems.indexOf(item);
       listItems.splice(itemIndex, 1);
     },
-    
+
     deleteList(listIndex) {
       if (this.currentListIndex === listIndex) {
         this.currentListIndex = this.lists[listIndex + 1]
@@ -89,7 +89,7 @@ export default {
       this.lists.push({
         name: newListName,
         items: []
-      });
+      })
       this.newListName = "";
 
       if (this.lists.length === 1) {
@@ -105,11 +105,11 @@ export default {
       this.lists[listIndex].items.push({
         name: newItemName,
         done: false
-      });
+      })
       this.newItemName = "";
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
