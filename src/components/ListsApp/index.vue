@@ -27,8 +27,6 @@
 import ListMenu from "./ListMenu";
 import ListContent from "./ListContent";
 
-// import { lists } from "@/store";
-
 export default {
   name: "Lists",
 
@@ -44,15 +42,6 @@ export default {
     }
   },
 
-  // data() {
-  //   return {
-  //     // newListName: this.$store.state.newListName,
-  //     // newItemName: this.$store.state.newItemName,
-  //     // currentListIndex: this.$store.state.currentListIndex,
-  //     // lists: this.$store.state.lists
-  //   }
-  // },
-
   methods: {
     setCurrentListIndex(newCurrentListIndex) {
       this.$store.commit({
@@ -67,7 +56,6 @@ export default {
         listIndex: listIndex,
         listItem: listItem
       })
-      // listItem.done = !listItem.done;
     },
 
     deleteItem(listIndex, listItem) {
