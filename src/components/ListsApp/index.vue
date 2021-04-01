@@ -1,33 +1,13 @@
 <template>
   <div class="lists-app">
-    <!-- eslint-disable -->
-    <ListMenu
-      :lists="lists"
-      :currentListIndex="currentListIndex"
-      :darkModeEnabled="darkModeEnabled"
-      v-model:newListName="newListName"
-      @delete-list="deleteList"
-      @set-current-list-index="setCurrentListIndex"
-      @add-list="addList"
-    />
-    <ListContent
-      :items="lists[currentListIndex]?.items || []"
-      :currentListIndex="currentListIndex"
-      :darkModeEnabled="darkModeEnabled"
-      v-model:newItemName="newItemName"
-      @delete-item="deleteItem"
-      @toggle-done="toggleDone"
-      @add-item="addItem"
-    />
-    <!-- eslint-enable -->
+    <ListMenu/>
+    <ListContent/>
   </div>
 </template>
 
 <script>
 import ListMenu from "./ListMenu";
 import ListContent from "./ListContent";
-
-import { lists } from "@/store";
 
 export default {
   name: "Lists",
@@ -36,73 +16,6 @@ export default {
     ListMenu,
     ListContent
   },
-
-  props: {
-    darkModeEnabled: {
-      type: Boolean,
-      required: true
-    }
-  },
-
-  data() {
-    return {
-      newListName: "",
-      newItemName: "",
-      currentListIndex: 2,
-      lists: lists
-    }
-  },
-
-  methods: {
-    setCurrentListIndex(newIndex) {
-      this.currentListIndex = newIndex;
-    },
-
-    toggleDone(listItem) {
-      listItem.done = !listItem.done;
-    },
-
-    deleteItem(listIndex, item) {
-      const listItems = this.lists[listIndex].items;
-      const itemIndex = listItems.indexOf(item);
-      listItems.splice(itemIndex, 1);
-    },
-
-    deleteList(listIndex) {
-      if (this.currentListIndex === listIndex) {
-        this.currentListIndex = this.lists[listIndex + 1]
-          ? listIndex
-          : listIndex > 0
-          ? listIndex - 1
-          : null;
-      } else if (this.currentListIndex > listIndex) {
-        this.currentListIndex--;
-      }
-      this.lists.splice(listIndex, 1);
-    },
-
-    addList(newListName) {
-      // TODO: Make sure the list does not exit already
-      this.lists.push({
-        name: newListName,
-        items: []
-      })
-      this.newListName = "";
-
-      if (this.lists.length === 1) {
-        setTimeout(() => (this.currentListIndex = 0), 100);
-      }
-    },
-
-    addItem(listIndex, newItemName) {
-      // TODO: Make sure the item does not exit already
-      this.lists[listIndex].items.push({
-        name: newItemName,
-        done: false
-      })
-      this.newItemName = "";
-    }
-  }
 }
 </script>
 
@@ -154,6 +67,7 @@ export default {
     background-position: right;
     transition: 0.2s ease-out;
     cursor: pointer;
+    
     &:hover {
       background-position: left;
     }
@@ -207,6 +121,7 @@ export default {
       background-color: #42b98336;
       transition: 0.2s ease-out;
       border-bottom: 2px transparent solid;
+      
       &:focus {
         outline: none;
         border-bottom: 2px #42b98393 solid;

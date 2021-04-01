@@ -1,29 +1,32 @@
 <template>
   <div class="list-content">
-    <div v-if="currentListIndex >= 0 && currentListIndex != null">
+    <div v-if="$store.state.currentListIndex >= 0 && $store.state.currentListIndex != null">
       <ul>
         <li
-          v-for="item in items"
+          v-for="item in $store.state.lists[$store.state.currentListIndex]?.items || []"
           :class="['list-item', { done: item.done }]"
           :key="item.name"
         >
-          <div class="item-name" @click="$emit('toggle-done', item)">
+          <div
+            class="item-name"
+            @click="toggleDone($store.state.currentListIndex, item)"
+          >
             {{ item.name }}
           </div>
-          <EditButton @click="$emit('delete-item', currentListIndex, item)" />
-          <DeleteButton @click="$emit('delete-item', currentListIndex, item)" />
+          <EditButton @click="deleteItem($store.state.currentListIndex, item)" />
+          <DeleteButton @click="deleteItem($store.state.currentListIndex, item)" />
         </li>
       </ul>
       <form
         class="new-item-form"
-        @submit.prevent="submitNewItem(currentListIndex, newItemName)"
+        @submit.prevent="submitNewItem($store.state.currentListIndex, $store.state.newItemName)"
       >
         <input
           type="text"
           class="text-input"
           ref="newItemInputRef"
-          :value="newItemName"
-          @input="$emit('update:newItemName', $event.target.value)"
+          :value="$store.state.newItemName"
+          @input="updateNewItemName($event.target.value)"
         />
         <input type="submit" value="+" class="button add-button" />
       </form>
@@ -45,24 +48,6 @@ export default {
     DeleteButton
   },
 
-  props: {
-    currentListIndex: Number,
-    items: {
-      type: Array,
-      required: true
-    },
-    newItemName: {
-      type: String,
-      required: true
-    },
-    darkModeEnabled: {
-      type: Boolean,
-      required: true
-    }
-  },
-
-  emits: ["update:newItemName", "add-item", "delete-item", "toggle-done"],
-
   setup() {
     const newItemInputRef = ref(null)
 
@@ -78,15 +63,43 @@ export default {
   },
 
   methods: {
-    submitNewItem(currentListIndex, newItemName) {
+    toggleDone(listIndex, listItem) {
+      this.$store.commit({
+        type: 'toggleDone',
+        listIndex: listIndex,
+        listItem: listItem
+      })
+    },
+
+    deleteItem(listIndex, listItem) {
+      this.$store.commit({
+        type: 'deleteItem',
+        listIndex: listIndex,
+        listItem: listItem
+      })
+    },
+
+    submitNewItem(listIndex, newItemName) {
+      // TODO: Make sure the item does not exit already
       newItemName = newItemName.trim()
 
       if (newItemName) {
-        this.$emit("add-item", currentListIndex, newItemName)
+        this.$store.commit({
+          type: 'addItem',
+          listIndex: listIndex,
+          newItemName: newItemName
+        })
       } else {
-        this.$emit("update:newItemName", "")
         this.refreshFocusOnInput()
       }
+      this.updateNewItemName('')
+    },
+
+    updateNewItemName(newItemName) {
+      this.$store.commit({
+        type: 'updateNewItemName',
+        newItemName: newItemName
+      })
     }
   }
 };

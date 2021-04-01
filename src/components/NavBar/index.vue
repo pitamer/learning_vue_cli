@@ -1,5 +1,5 @@
 <template>
-  <div :class="['app-bar', {'dark' : darkModeEnabled}]">
+  <div :class="['app-bar', { dark: $store.state.darkModeEnabled }]">
     <div class="nav">
       <router-link to="/">
         <span class="nav-arrow">
@@ -13,8 +13,8 @@
       </router-link>
     </div>
     <Switch
-      :isActive="!darkModeEnabled"
-      :switchFunction="toggleDarkMode"
+      :isActive="!$store.state.darkModeEnabled"
+      :switchFunction="() => $store.commit('toggleDarkMode')"
     />
   </div>
 </template>
@@ -27,17 +27,6 @@ export default {
 
   components: {
     Switch
-  },
-
-  props: {
-    darkModeEnabled: {
-      type: Boolean,
-      required: true
-    },
-    toggleDarkMode: {
-      type: Function,
-      required: true
-    }
   }
 };
 </script>
@@ -49,6 +38,7 @@ export default {
   display: flex;
   padding: 0.1em 0;
   transition: 0.2s ease-out;
+
   &.dark {
     background-color: rgba(225, 225, 225, 0.1);
     .nav {
@@ -67,6 +57,7 @@ export default {
       }
     }
   }
+  
   .nav {
     margin-left: 2.5em;
     flex-grow: 1;
