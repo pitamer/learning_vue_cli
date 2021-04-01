@@ -4,7 +4,7 @@
       This is a lists app.
     </h1>
     <div class="lists-app-container">
-      <ListsApp :darkModeEnabled="darkModeEnabled" />
+      <ListsApp />
     </div>
   </div>
 </template>
@@ -14,15 +14,9 @@ import ListsApp from "@/components/ListsApp";
 
 export default {
   name: "Lists",
+  
   components: {
     ListsApp
-  },
-
-  props: {
-    darkModeEnabled: {
-      type: Boolean,
-      required: true
-    }
   }
 };
 </script>

@@ -1,25 +1,7 @@
 <template>
   <div class="lists-app">
-    <!-- eslint-disable -->
-    <ListMenu
-      :lists="this.$store.state.lists"
-      :currentListIndex="this.$store.state.currentListIndex"
-      :darkModeEnabled="darkModeEnabled"
-      v-model:newListName="this.$store.state.newListName"
-      @delete-list="deleteList"
-      @set-current-list-index="setCurrentListIndex"
-      @add-list="addList"
-    />
-    <ListContent
-      :items="this.$store.state.lists[this.$store.state.currentListIndex]?.items || []"
-      :currentListIndex="this.$store.state.currentListIndex"
-      :darkModeEnabled="darkModeEnabled"
-      v-model:newItemName="this.$store.state.newItemName"
-      @delete-item="deleteItem"
-      @toggle-done="toggleDone"
-      @add-item="addItem"
-    />
-    <!-- eslint-enable -->
+    <ListMenu/>
+    <ListContent/>
   </div>
 </template>
 
@@ -34,62 +16,6 @@ export default {
     ListMenu,
     ListContent
   },
-
-  props: {
-    darkModeEnabled: {
-      type: Boolean,
-      required: true
-    }
-  },
-
-  methods: {
-    setCurrentListIndex(newCurrentListIndex) {
-      this.$store.commit({
-        type: 'setCurrentListIndex',
-        newCurrentListIndex: newCurrentListIndex
-      })
-    },
-
-    toggleDone(listIndex, listItem) {
-      this.$store.commit({
-        type: 'toggleDone',
-        listIndex: listIndex,
-        listItem: listItem
-      })
-    },
-
-    deleteItem(listIndex, listItem) {
-      this.$store.commit({
-        type: 'deleteItem',
-        listIndex: listIndex,
-        listItem: listItem
-      })
-    },
-
-    deleteList(listIndex) {
-      this.$store.commit({
-        type: 'deleteList',
-        listIndex: listIndex
-      })
-    },
-
-    addList(newListName) {
-      // TODO: Make sure the list does not exit already
-      this.$store.commit({
-        type: 'addList',
-        newListName: newListName
-      })
-    },
-
-    addItem(listIndex, newItemName) {
-      // TODO: Make sure the item does not exit already
-      this.$store.commit({
-        type: 'addItem',
-        listIndex: listIndex,
-        newItemName: newItemName
-      })
-    }
-  }
 }
 </script>
 
@@ -141,6 +67,7 @@ export default {
     background-position: right;
     transition: 0.2s ease-out;
     cursor: pointer;
+    
     &:hover {
       background-position: left;
     }
@@ -194,6 +121,7 @@ export default {
       background-color: #42b98336;
       transition: 0.2s ease-out;
       border-bottom: 2px transparent solid;
+      
       &:focus {
         outline: none;
         border-bottom: 2px #42b98393 solid;

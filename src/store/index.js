@@ -1,23 +1,28 @@
 import { createStore } from "vuex";
-import { initialLists } from "./constants"
+import { initialLists } from "./constants";
 
 export default createStore({
   state() {
     return {
+      darkModeEnabled: false,
       newListName: "",
       newItemName: "",
       currentListIndex: 0,
-      lists: initialLists
+      lists: initialLists,
     };
   },
 
   mutations: {
+    toggleDarkMode(state) {
+      state.darkModeEnabled = !state.darkModeEnabled;
+    },
+
     setCurrentListIndex(state, payload) {
       state.currentListIndex = payload.newCurrentListIndex;
     },
 
     toggleDone(state, payload) {
-      const { listIndex, listItem } = payload
+      const { listIndex, listItem } = payload;
 
       const listItems = state.lists[listIndex].items;
       const itemIndex = listItems.indexOf(listItem);
@@ -33,8 +38,8 @@ export default createStore({
     },
 
     deleteList(state, payload) {
-      const { listIndex } = payload
-      
+      const { listIndex } = payload;
+
       if (state.currentListIndex === listIndex) {
         state.currentListIndex = state.lists[listIndex + 1]
           ? listIndex
@@ -60,15 +65,30 @@ export default createStore({
     },
 
     addItem(state, payload) {
-      const { listIndex, newItemName } = payload
-      
+      const { listIndex, newItemName } = payload;
+
       state.lists[listIndex].items.push({
         name: newItemName,
         done: false,
       });
       state.newItemName = "";
     },
+
+    updateNewListName(state, payload) {
+      state.newListName = payload.newListName;
+    },
+
+    updateNewItemName(state, payload) {
+      state.newItemName = payload.newItemName;
+    },
   },
+
+  getters: {
+    currentListItems(state) {
+      state.lists[state.currentListIndex]?.items || [];
+    },
+  }, // # TODO: understand getters better, fix this one
+
   actions: {},
   modules: {},
 });

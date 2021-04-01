@@ -1,10 +1,7 @@
 <template>
-  <div :class="['app-content', {'dark' : darkModeEnabled}]">
-    <NavBar
-      :darkModeEnabled="darkModeEnabled"
-      :toggleDarkMode="toggleDarkMode"
-    />
-    <router-view :darkModeEnabled="darkModeEnabled" />
+  <div :class="['app-content', { dark: $store.state.darkModeEnabled }]">
+    <NavBar />
+    <router-view />
   </div>
 </template>
 
@@ -15,18 +12,6 @@ export default {
   components: {
     NavBar
   },
-
-  data() {
-    return {
-      darkModeEnabled: true
-    }
-  },
-
-  methods: {
-    toggleDarkMode() {
-      this.darkModeEnabled = !this.darkModeEnabled
-    }
-  }
 }
 </script>
 
@@ -51,6 +36,7 @@ html, body {
   color: var(--dark-green);
   height: 100%;
   transition: 0.2s ease-out;
+  
   &.dark {
     background-color: var(--dark-green);
     color: var(--cucumber-water)

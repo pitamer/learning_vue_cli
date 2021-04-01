@@ -4,7 +4,7 @@
       <li
         v-for="list in lists"
         :class="[
-          { current: lists.indexOf(list) === currentListIndex },
+          { current: lists.indexOf(list) === $store.state.currentListIndex },
           { allDone: list.items.length && list.items.every(i => i.done) },
           { empty: !list.items.length },
           'list-title',
@@ -13,24 +13,27 @@
       >
         <div
           class="list-name"
-          @click="$emit('set-current-list-index', lists.indexOf(list))"
+          @click="setCurrentListIndex(lists.indexOf(list))"
         >
           {{ list.name }}
           <span class="list-progress-indication">
             {{ listProgressIndication(list) }}
           </span>
         </div>
-        <EditButton @click="$emit('delete-list', lists.indexOf(list))" />
-        <DeleteButton @click="$emit('delete-list', lists.indexOf(list))" />
+        <EditButton @click="deleteList(lists.indexOf(list))" />
+        <DeleteButton @click="deleteList(lists.indexOf(list))" />
       </li>
     </ul>
-    <form class="new-list-form" @submit.prevent="submitNewList(newListName)">
+    <form
+      class="new-list-form"
+      @submit.prevent="submitNewList($store.state.newListName)"
+    >
       <input
         type="text"
         class="text-input"
         ref="newListInputRef"
-        :value="newListName"
-        @input="$emit('update:newListName', $event.target.value)"
+        :value="$store.state.newListName"
+        @input="updateNewListName($event.target.value)"
       />
       <input type="submit" value="+" class="button add-item-button" />
     </form>
@@ -53,29 +56,6 @@ export default {
     // SimpleTextForm
   },
 
-  emits: [
-    "set-current-list-index",
-    "delete-list",
-    "add-list",
-    "update:newListName"
-  ],
-
-  props: {
-    currentListIndex: Number,
-    lists: {
-      type: Array,
-      required: true
-    },
-    newListName: {
-      type: String,
-      required: true
-    },
-    darkModeEnabled: {
-      type: Boolean,
-      required: true
-    }
-  },
-
   setup() {
     const newListInputRef = ref(null)
 
@@ -87,6 +67,12 @@ export default {
     return {
       newListInputRef,
       refreshFocusOnInput
+    }
+  },
+
+  data() {
+    return {
+      lists: this.$store.state.lists,
     }
   },
 
@@ -105,15 +91,40 @@ export default {
       return `(${donePercentage}%)`;
     },
 
+    setCurrentListIndex(newCurrentListIndex) {
+      this.$store.commit({
+        type: 'setCurrentListIndex',
+        newCurrentListIndex: newCurrentListIndex
+      })
+    },
+
+    deleteList(listIndex) {
+      this.$store.commit({
+        type: 'deleteList',
+        listIndex: listIndex
+      })
+    },
+
     submitNewList(newListName) {
+      // TODO: Make sure the list does not exit already
       newListName = newListName.trim()
 
       if (newListName) {
-        this.$emit("add-list", newListName)
+        this.$store.commit({
+          type: 'addList',
+          newListName: newListName
+        })
       } else {
-        this.$emit("update:newListName", "")
         this.refreshFocusOnInput()
       }
+      this.updateNewListName('')
+    },
+
+    updateNewListName(newListName) {
+      this.$store.commit({
+        type: 'updateNewListName',
+        newListName: newListName
+      })
     }
   }
 };
