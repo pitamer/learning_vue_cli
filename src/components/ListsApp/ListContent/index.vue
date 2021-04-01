@@ -7,7 +7,7 @@
           :class="['list-item', { done: item.done }]"
           :key="item.name"
         >
-          <div class="item-name" @click="$emit('toggle-done', item)">
+          <div class="item-name" @click="$emit('toggle-done', currentListIndex, item)">
             {{ item.name }}
           </div>
           <EditButton @click="$emit('delete-item', currentListIndex, item)" />

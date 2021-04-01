@@ -2,19 +2,19 @@
   <div class="lists-app">
     <!-- eslint-disable -->
     <ListMenu
-      :lists="lists"
-      :currentListIndex="currentListIndex"
+      :lists="this.$store.state.lists"
+      :currentListIndex="this.$store.state.currentListIndex"
       :darkModeEnabled="darkModeEnabled"
-      v-model:newListName="newListName"
+      v-model:newListName="this.$store.state.newListName"
       @delete-list="deleteList"
       @set-current-list-index="setCurrentListIndex"
       @add-list="addList"
     />
     <ListContent
-      :items="lists[currentListIndex]?.items || []"
-      :currentListIndex="currentListIndex"
+      :items="this.$store.state.lists[this.$store.state.currentListIndex]?.items || []"
+      :currentListIndex="this.$store.state.currentListIndex"
       :darkModeEnabled="darkModeEnabled"
-      v-model:newItemName="newItemName"
+      v-model:newItemName="this.$store.state.newItemName"
       @delete-item="deleteItem"
       @toggle-done="toggleDone"
       @add-item="addItem"
@@ -27,7 +27,7 @@
 import ListMenu from "./ListMenu";
 import ListContent from "./ListContent";
 
-import { lists } from "@/store";
+// import { lists } from "@/store";
 
 export default {
   name: "Lists",
@@ -44,63 +44,62 @@ export default {
     }
   },
 
-  data() {
-    return {
-      newListName: "",
-      newItemName: "",
-      currentListIndex: 2,
-      lists: lists
-    }
-  },
+  // data() {
+  //   return {
+  //     // newListName: this.$store.state.newListName,
+  //     // newItemName: this.$store.state.newItemName,
+  //     // currentListIndex: this.$store.state.currentListIndex,
+  //     // lists: this.$store.state.lists
+  //   }
+  // },
 
   methods: {
-    setCurrentListIndex(newIndex) {
-      this.currentListIndex = newIndex;
+    setCurrentListIndex(newCurrentListIndex) {
+      this.$store.commit({
+        type: 'setCurrentListIndex',
+        newCurrentListIndex: newCurrentListIndex
+      })
     },
 
-    toggleDone(listItem) {
-      listItem.done = !listItem.done;
+    toggleDone(listIndex, listItem) {
+      this.$store.commit({
+        type: 'toggleDone',
+        listIndex: listIndex,
+        listItem: listItem
+      })
+      // listItem.done = !listItem.done;
     },
 
-    deleteItem(listIndex, item) {
-      const listItems = this.lists[listIndex].items;
-      const itemIndex = listItems.indexOf(item);
-      listItems.splice(itemIndex, 1);
+    deleteItem(listIndex, listItem) {
+      this.$store.commit({
+        type: 'deleteItem',
+        listIndex: listIndex,
+        listItem: listItem
+      })
     },
 
     deleteList(listIndex) {
-      if (this.currentListIndex === listIndex) {
-        this.currentListIndex = this.lists[listIndex + 1]
-          ? listIndex
-          : listIndex > 0
-          ? listIndex - 1
-          : null;
-      } else if (this.currentListIndex > listIndex) {
-        this.currentListIndex--;
-      }
-      this.lists.splice(listIndex, 1);
+      this.$store.commit({
+        type: 'deleteList',
+        listIndex: listIndex
+      })
     },
 
     addList(newListName) {
       // TODO: Make sure the list does not exit already
-      this.lists.push({
-        name: newListName,
-        items: []
+      this.$store.commit({
+        type: 'addList',
+        newListName: newListName
       })
-      this.newListName = "";
-
-      if (this.lists.length === 1) {
-        setTimeout(() => (this.currentListIndex = 0), 100);
-      }
     },
 
     addItem(listIndex, newItemName) {
       // TODO: Make sure the item does not exit already
-      this.lists[listIndex].items.push({
-        name: newItemName,
-        done: false
+      this.$store.commit({
+        type: 'addItem',
+        listIndex: listIndex,
+        newItemName: newItemName
       })
-      this.newItemName = "";
     }
   }
 }
