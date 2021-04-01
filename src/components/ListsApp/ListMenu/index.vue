@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import EditButton from "../buttons/EditButton.vue";
-import DeleteButton from "../buttons/DeleteButton.vue";
+import EditButton from "@/components/buttons/EditButton";
+import DeleteButton from "@/components/buttons/DeleteButton";
 // import SimpleTextForm from "@/components/SimpleTextForm"
 
 import { ref } from "vue";
